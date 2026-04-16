@@ -12,6 +12,7 @@ resource "aws_instance" "was_c" {
   user_data = <<-EOF
     sudo dnf update -y
     sudo dnf install -y python3-pip
+    sudo dnf install -y mariadb114
 
     sudo pip3 install fastapi uvicorn mysql-connector-python pydantic python-dotenv
   EOF
