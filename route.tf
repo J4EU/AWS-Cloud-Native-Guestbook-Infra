@@ -24,9 +24,6 @@ resource "aws_route_table_association" "public_rt_assoc2" {
 resource "aws_route_table" "private_was1_rt" {
   vpc_id = aws_vpc.vpc.id
 
-  # TODO
-  # route {NAT 인스턴스(AZ-a_로 라우팅}
-
   tags = {
     Name = "private-WAS1-rt"
   }
@@ -34,13 +31,32 @@ resource "aws_route_table" "private_was1_rt" {
 
 resource "aws_route_table" "private_was2_rt" {
   vpc_id = aws_vpc.vpc.id
-
-  # TODO
-  # route {NAT 인스턴스(AZ-c)로 라우팅}
-
   tags = {
     Name = "private-WAS2-rt"
   }
+}
+
+resource "aws_route_table_association" "private_rt_assoc1" {
+  subnet_id      = aws_subnet.private_subnet1_a.id
+  route_table_id = aws_route_table.private_was1_rt.id
+}
+
+resource "aws_route_table_association" "private_rt_assoc2" {
+  subnet_id      = aws_subnet.private_subnet1_c.id
+  route_table_id = aws_route_table.private_was2_rt.id
+}
+
+# NAT 인스턴스 라우팅 테이블
+resource "aws_route" "was_nat_route_a" {
+  route_table_id         = aws_route_table.private_was1_rt.id
+  destination_cidr_block = "0.0.0.0/0"
+  network_interface_id   = aws_instance.guestbook_nat_instance_a.primary_network_interface_id
+}
+
+resource "aws_route" "was_nat_route_c" {
+  route_table_id         = aws_route_table.private_was2_rt.id
+  destination_cidr_block = "0.0.0.0/0"
+  network_interface_id   = aws_instance.guestbook_nat_instance_c.primary_network_interface_id
 }
 
 resource "aws_route_table" "private_rds_rt" {
