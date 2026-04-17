@@ -8,16 +8,8 @@ resource "aws_security_group" "was_sg" {
   }
 }
 
-# WAS 인바운드 - 8000 포트로 들어오는 ALB 트래픽 허용
-resource "aws_vpc_security_group_ingress_rule" "allow_8000" {
-  description       = "Allow traffic from 8000 port"
-  security_group_id = aws_security_group.was_sg.id
+# WAS 인바운드 - 8000 포트로 들어오는 ALB 트래픽 허용 - ../network_rules.tf에 정의됨
 
-  from_port                    = 8000
-  to_port                      = 8000
-  ip_protocol                  = "tcp"
-  referenced_security_group_id = aws_security_group.alb_sg.id
-}
 
 # WAS 인바운드 - 22 포트로 들어오는 NAT 트래픽 허용
 resource "aws_vpc_security_group_ingress_rule" "allow_ssh_from_nat" {
