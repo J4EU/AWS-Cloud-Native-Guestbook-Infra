@@ -7,6 +7,7 @@ resource "aws_instance" "guestbook_nat_instance_a" {
   availability_zone      = "ap-northeast-2a"
   vpc_security_group_ids = [aws_security_group.nat_sg.id]
 
+  # "다른 EC2의 트래픽도 중계하겠다"라는 설정 (NAT/VPN용)
   source_dest_check = false
 
   user_data = <<-EOF

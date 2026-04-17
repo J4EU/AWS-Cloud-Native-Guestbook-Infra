@@ -1,3 +1,4 @@
+# L1 (Core Outputs 참조)
 data "terraform_remote_state" "core_link" {
   backend = "local"
 
@@ -6,6 +7,7 @@ data "terraform_remote_state" "core_link" {
   }
 }
 
+# L2 (Database Outputs 참조)
 data "terraform_remote_state" "database_link" {
   backend = "local"
 

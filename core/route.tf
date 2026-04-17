@@ -25,15 +25,25 @@ resource "aws_route_table" "private_was1_rt" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "private-WAS1-rt"
+    Name = "WAS1-rt"
   }
 }
 
 resource "aws_route_table" "private_was2_rt" {
   vpc_id = aws_vpc.vpc.id
   tags = {
-    Name = "private-WAS2-rt"
+    Name = "WAS2-rt"
   }
+}
+
+resource "aws_route_table_association" "private_rt_assoc1" {
+  subnet_id      = aws_subnet.private_subnet1_a.id
+  route_table_id = aws_route_table.private_was1_rt.id
+}
+
+resource "aws_route_table_association" "private_rt_assoc2" {
+  subnet_id      = aws_subnet.private_subnet1_c.id
+  route_table_id = aws_route_table.private_was2_rt.id
 }
 
 # WAS 라우팅 테이블의 라우팅 규칙 (NAT 인스턴스의 ENI로 전송)
@@ -51,21 +61,11 @@ resource "aws_route" "was_nat_route_c" {
   network_interface_id   = aws_instance.guestbook_nat_instance_c.primary_network_interface_id
 }
 
-resource "aws_route_table_association" "private_rt_assoc1" {
-  subnet_id      = aws_subnet.private_subnet1_a.id
-  route_table_id = aws_route_table.private_was1_rt.id
-}
-
-resource "aws_route_table_association" "private_rt_assoc2" {
-  subnet_id      = aws_subnet.private_subnet1_c.id
-  route_table_id = aws_route_table.private_was2_rt.id
-}
-
 resource "aws_route_table" "private_rds_rt" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "private-RDS-rt"
+    Name = "RDS-rt"
   }
 }
 
