@@ -1,6 +1,7 @@
+# 데이터베이스 서브넷 그룹 (가용 영역이 다른 서브넷 2개 이상)
 resource "aws_db_subnet_group" "db_sn_group" {
   name       = "rds-db-subnet-group"
-  subnet_ids = [data.terraform_remote_state.core_link.outputs.private_subnet2_a, data.terraform_remote_state.core_link.outputs.private_subnet2_c]
+  subnet_ids = [data.terraform_remote_state.core_link.outputs.private_subnet2_a_id, data.terraform_remote_state.core_link.outputs.private_subnet2_c_id]
 
   tags = {
     Name = "DB Subnet Group"
@@ -39,12 +40,4 @@ resource "aws_db_instance" "rds" {
 
   skip_final_snapshot = true
   multi_az            = true
-}
-
-output "rds_endpoint" {
-  value = aws_db_instance.rds.endpoint
-}
-
-output "rds_sg" {
-  value = aws_security_group.rds_sg.id
 }

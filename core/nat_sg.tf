@@ -25,8 +25,6 @@ resource "aws_vpc_security_group_ingress_rule" "allow_ssh_from_MyIP" {
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_nat" {
   security_group_id = aws_security_group.nat_sg.id
 
-  from_port   = 0
-  to_port     = 0
   ip_protocol = "-1"
   cidr_ipv4   = "0.0.0.0/0"
 }

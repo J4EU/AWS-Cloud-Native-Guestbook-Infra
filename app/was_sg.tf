@@ -27,15 +27,13 @@ resource "aws_vpc_security_group_ingress_rule" "allow_ssh_from_nat" {
   from_port                    = 22
   to_port                      = 22
   ip_protocol                  = "tcp"
-  referenced_security_group_id = data.terraform_remote_state.core_link.outputs.security_group_nat # aws_security_group.nat_sg.id
+  referenced_security_group_id = data.terraform_remote_state.core_link.outputs.nat_sg_id
 }
 
 # WAS 아웃바운드
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_was" {
   security_group_id = aws_security_group.was_sg.id
 
-  # from_port   = 0
-  # to_port     = 0
   ip_protocol = "-1"
   cidr_ipv4   = "0.0.0.0/0"
 }

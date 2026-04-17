@@ -1,10 +1,8 @@
 # NAT 인바운드 - WAS의 모든 트래픽 허용 (WAS -> NAT)
 resource "aws_vpc_security_group_ingress_rule" "allow_all_from_was" {
   description       = "Allow traffic from WAS"
-  security_group_id = data.terraform_remote_state.core_link.outputs.security_group_nat
+  security_group_id = data.terraform_remote_state.core_link.outputs.nat_sg_id
 
-  # from_port                    = 0
-  # to_port                      = 0
   ip_protocol                  = "-1"
   referenced_security_group_id = aws_security_group.was_sg.id
 }
@@ -12,7 +10,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_all_from_was" {
 # RDS 인바운드 - WAS의 3306으로 들어오는 트래픽 허용 (WAS -> RDS)
 resource "aws_vpc_security_group_ingress_rule" "allow_3306_from_was" {
   description       = "Allow 3306 traffic from WAS"
-  security_group_id = data.terraform_remote_state.database_link.outputs.rds_sg
+  security_group_id = data.terraform_remote_state.database_link.outputs.rds_sg_id
 
   from_port                    = 3306
   to_port                      = 3306
