@@ -7,7 +7,7 @@ resource "aws_s3_bucket" "guestbook_s3" {
   }
 }
 
-# 이 리소스를 추가하면 S3가 정적 웹사이트 호스팅 활성화됨
+# 이 리소스를 추가하면 S3가 정적 웹사이트 호스팅 활성화됨 (CloudFront OAC를 사용할 경우 사용 안 함)
 # resource "aws_s3_bucket_website_configuration" "guestbook_website" {
 #   bucket = aws_s3_bucket.guestbook_s3.id
 
@@ -36,25 +36,7 @@ resource "aws_s3_bucket_public_access_block" "block_public" {
   restrict_public_buckets = true
 }
 
-# resource "aws_s3_bucket_policy" "allow_cloudfront" {
-#   bucket = aws_s3_bucket.guestbook_s3.id
-#   policy = jsonencode({
-#     version = "2012-10-17"
-#     Statement = [
-#       {
-#         Sid    = "AllowCloudFrontServicePrincipal"
-#         Effect = "Allow"
-#         Principal = {
-#           Service = "cloudfront.amazonaws.com"
-#         }
-#         Action   = "s3:GetObject"
-#         Resource = "${aws_s3_bucket.static_site_arn}"
-#         Condition = {
-#           StringEquals = {
-#             "AWS:SourceArn" = aws_cloudfront_distribution.s3_distribution.arn
-#           }
-#         }
-#       }
-#     ]
-#   })
-# }
+resource "aws_s3_bucket_policy" "allow_access_from_cloudfront" {
+  bucket = aws_s3_bucket.guestbook_s3.id
+  policy = data.aws_iam_policy_document.s3_policy.json
+}
