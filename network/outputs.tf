@@ -37,3 +37,11 @@ output "private_subnet2_c_id" {
 # output "nat_sg_id" {
 #   value = aws_security_group.nat_sg.id
 # }
+
+output "private_a_rt_id" {
+  value = aws_route_table.private_a_rt.id
+}
+
+output "private_c_rt_id" {
+  value = aws_route_table.private_c_rt.id
+}

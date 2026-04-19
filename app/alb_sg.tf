@@ -1,7 +1,7 @@
 # ALB 보안 그룹
 resource "aws_security_group" "alb_sg" {
   name   = "alb-sg"
-  vpc_id = data.terraform_remote_state.core_link.outputs.vpc_id
+  vpc_id = data.terraform_remote_state.network_link.outputs.vpc_id
 
   tags = {
     Name = "ALB-SG"

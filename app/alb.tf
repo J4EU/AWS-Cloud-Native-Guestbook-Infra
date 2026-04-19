@@ -8,8 +8,8 @@ resource "aws_lb" "alb" {
 
   # 퍼블릭 서브넷, 2개 이상 다른 AZ에 걸치도록
   subnets = [
-    data.terraform_remote_state.core_link.outputs.public_subnet1_a_id,
-    data.terraform_remote_state.core_link.outputs.public_subnet1_c_id
+    data.terraform_remote_state.network_link.outputs.public_subnet1_a_id,
+    data.terraform_remote_state.network_link.outputs.public_subnet1_c_id
   ]
 
   tags = {
@@ -22,7 +22,7 @@ resource "aws_lb_target_group" "was_tg" {
   name     = "was-tg"
   port     = 8000
   protocol = "HTTP"
-  vpc_id   = data.terraform_remote_state.core_link.outputs.vpc_id
+  vpc_id   = data.terraform_remote_state.network_link.outputs.vpc_id
 
   health_check {
     path                = "/"
