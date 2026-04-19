@@ -1,3 +1,4 @@
+# 퍼블릭 서브넷 라우팅 테이블
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.vpc.id
 
@@ -21,51 +22,38 @@ resource "aws_route_table_association" "public_rt_assoc2" {
   route_table_id = aws_route_table.public_rt.id
 }
 
-resource "aws_route_table" "private_was1_rt" {
+# 프라이빗 서브넷 (AZ-a) 라우팅 테이블
+resource "aws_route_table" "private_a_rt" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "WAS1-rt"
-  }
-}
-
-resource "aws_route_table" "private_was2_rt" {
-  vpc_id = aws_vpc.vpc.id
-  tags = {
-    Name = "WAS2-rt"
+    Name = "private-a-rt"
   }
 }
 
 resource "aws_route_table_association" "private_rt_assoc1" {
   subnet_id      = aws_subnet.private_subnet1_a.id
-  route_table_id = aws_route_table.private_was1_rt.id
+  route_table_id = aws_route_table.private_a_rt.id
+}
+
+# 프라이빗 서브넷 (AZ-c) 라우팅 테이블
+resource "aws_route_table" "private_c_rt" {
+  vpc_id = aws_vpc.vpc.id
+  tags = {
+    Name = "private-c-rt"
+  }
 }
 
 resource "aws_route_table_association" "private_rt_assoc2" {
   subnet_id      = aws_subnet.private_subnet1_c.id
-  route_table_id = aws_route_table.private_was2_rt.id
-}
-
-# WAS 라우팅 테이블의 라우팅 규칙 (NAT 인스턴스의 ENI로 전송)
-resource "aws_route" "was_nat_route_a" {
-  route_table_id         = aws_route_table.private_was1_rt.id
-  destination_cidr_block = "0.0.0.0/0"
-
-  # 패킷을 인스턴스 본체로 보내는 게 아니라, NAT Instance (AZ-a)의 ENI(네트워크 인터페이스=NIC)로 보낸다
-  network_interface_id = aws_instance.guestbook_nat_instance_a.primary_network_interface_id
-}
-
-resource "aws_route" "was_nat_route_c" {
-  route_table_id         = aws_route_table.private_was2_rt.id
-  destination_cidr_block = "0.0.0.0/0"
-  network_interface_id   = aws_instance.guestbook_nat_instance_c.primary_network_interface_id
+  route_table_id = aws_route_table.private_c_rt.id
 }
 
 resource "aws_route_table" "private_rds_rt" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "RDS-rt"
+    Name = "private-rds-rt"
   }
 }
 
@@ -78,3 +66,9 @@ resource "aws_route_table_association" "private_rds_rt_assoc2" {
   subnet_id      = aws_subnet.private_subnet2_c.id
   route_table_id = aws_route_table.private_rds_rt.id
 }
+
+# nat_instance_a.tf에 정의
+# 프라이빗 서브넷(AZ-a-1) 라우팅 테이블 - 라우팅 규칙 (NAT 인스턴스의 ENI로 전송)
+
+# nat_instance_c.tf에 정의
+# 프라이빗 서브넷(AZ-c-1) 라우팅 테이블 - 라우팅 규칙 (NAT 인스턴스의 ENI로 전송)

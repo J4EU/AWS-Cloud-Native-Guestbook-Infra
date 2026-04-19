@@ -3,7 +3,7 @@ resource "aws_instance" "guestbook_nat_instance_c" {
   instance_type = "t4g.nano" # 비용 절감을 위해 t4g.nano(ARM) 사용. NAT는 X86 호환성 덜 필요함
   key_name      = "guestbook-nat"
 
-  subnet_id              = aws_subnet.public_subnet1_c.id
+  subnet_id              = data.terraform_remote_state.network_link.outputs.public_subnet1_c_id
   availability_zone      = "ap-northeast-2c"
   vpc_security_group_ids = [aws_security_group.nat_sg.id]
 
@@ -37,4 +37,10 @@ resource "aws_eip" "guestbook_nat2_eip" {
   tags = {
     Name = "guestbook-nat-c-eip"
   }
+}
+
+resource "aws_route" "was_nat_route_c" {
+  route_table_id         = data.terraform_remote_state.network_link.outputs.private_c_rt_id
+  destination_cidr_block = "0.0.0.0/0"
+  network_interface_id   = aws_instance.guestbook_nat_instance_c.primary_network_interface_id
 }

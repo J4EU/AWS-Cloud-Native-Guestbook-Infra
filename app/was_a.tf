@@ -3,7 +3,7 @@ resource "aws_instance" "was_a" {
   instance_type = var.was_instance_type
   key_name      = "guestbook-was"
 
-  subnet_id              = data.terraform_remote_state.core_link.outputs.private_subnet1_a_id
+  subnet_id              = data.terraform_remote_state.network_link.outputs.private_subnet1_a_id
   availability_zone      = "ap-northeast-2a"
   vpc_security_group_ids = [aws_security_group.was_sg.id]
 

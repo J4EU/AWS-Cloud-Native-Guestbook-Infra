@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>방명록 웹 사이트</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        #msg-list {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 20px;
+            min-height: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>📖 J4EU 방명록</h2>
+    <input type="text" id="content" placeholder="메시지를 입력하세요">
+    <button onclick="sendMessage()">등록</button>
+
+    <div id="msg-list">
+        <h4>방명록 목록</h4>
+        <ul id="messages"></ul>
+    </div>
+
+    <script>
+        const wasUrl = "/api";
+
+        async function fetchMessages() {
+            const res = await fetch(`${wasUrl}/messages`);
+            const data = await res.json();
+            const list = document.getElementById('messages');
+            list.innerHTML = "";
+            data.messages?.forEach(m => {
+                const li = document.createElement('li');
+                li.textContent = m;
+                list.appendChild(li);
+            });
+        }
+
+        async function sendMessage() {
+            const content = document.getElementById('content').value;
+            await fetch(`${wasUrl}/messages`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content })
+            });
+            document.getElementById('content').value = "";
+            fetchMessages();
+        }
+
+        fetchMessages();
+    </script>
+</body>
+
+</html>

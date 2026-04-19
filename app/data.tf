@@ -1,9 +1,9 @@
 # L1 (Core Outputs 참조)
-data "terraform_remote_state" "core_link" {
+data "terraform_remote_state" "network_link" {
   backend = "local"
 
   config = {
-    path = "../core/terraform.tfstate"
+    path = "../network/terraform.tfstate"
   }
 }
 

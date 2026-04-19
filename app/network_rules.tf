@@ -1,7 +1,7 @@
 # NAT 인바운드 - WAS의 모든 트래픽 허용 (WAS -> NAT)
 resource "aws_vpc_security_group_ingress_rule" "allow_all_from_was" {
   description       = "Allow traffic from WAS"
-  security_group_id = data.terraform_remote_state.core_link.outputs.nat_sg_id
+  security_group_id = aws_security_group.nat_sg.id
 
   ip_protocol                  = "-1"
   referenced_security_group_id = aws_security_group.was_sg.id

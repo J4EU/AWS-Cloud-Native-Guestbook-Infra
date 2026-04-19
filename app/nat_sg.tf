@@ -1,7 +1,7 @@
 # NAT 보안 그룹
 resource "aws_security_group" "nat_sg" {
   name   = "nat-sg"
-  vpc_id = aws_vpc.vpc.id
+  vpc_id = data.terraform_remote_state.network_link.outputs.vpc_id
 
   tags = {
     Name = "NAT-SG"
