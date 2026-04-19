@@ -1,7 +1,7 @@
 # RDS 보안 그룹
 resource "aws_security_group" "rds_sg" {
   name   = "rds-sg"
-  vpc_id = data.terraform_remote_state.core_link.outputs.vpc_id
+  vpc_id = data.terraform_remote_state.network_link.outputs.vpc_id
 
   tags = {
     Name = "RDS-SG"
