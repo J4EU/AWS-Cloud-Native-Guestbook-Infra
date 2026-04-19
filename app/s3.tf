@@ -40,3 +40,22 @@ resource "aws_s3_bucket_policy" "allow_access_from_cloudfront" {
   bucket = aws_s3_bucket.guestbook_s3.id
   policy = data.aws_iam_policy_document.s3_policy.json
 }
+
+# S3 보안 정책
+data "aws_iam_policy_document" "s3_policy" {
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.guestbook_s3.arn}/*"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+      values   = [aws_cloudfront_distribution.main_dist.arn]
+    }
+  }
+}
