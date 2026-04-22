@@ -50,18 +50,18 @@ resource "aws_lb_listener" "http" {
 }
 
 # Attachment - WAS-a
-resource "aws_lb_target_group_attachment" "was_a" {
-  target_group_arn = aws_lb_target_group.was_tg.arn
-  target_id        = aws_instance.was_a.id
-  port             = 8000
-}
+# resource "aws_lb_target_group_attachment" "was_a" {
+#   target_group_arn = aws_lb_target_group.was_tg.arn
+#   target_id        = aws_instance.was_a.id
+#   port             = 8000
+# }
 
-# Attachment - WAS-c
-resource "aws_lb_target_group_attachment" "was_c" {
-  target_group_arn = aws_lb_target_group.was_tg.arn
-  target_id        = aws_instance.was_c.id
-  port             = 8000
-}
+# # Attachment - WAS-c
+# resource "aws_lb_target_group_attachment" "was_c" {
+#   target_group_arn = aws_lb_target_group.was_tg.arn
+#   target_id        = aws_instance.was_c.id
+#   port             = 8000
+# }
 
 # output
 output "alb_dns_name" {
