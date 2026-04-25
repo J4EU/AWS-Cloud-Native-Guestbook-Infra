@@ -5,7 +5,7 @@ resource "aws_vpc" "vpc" {
   enable_dns_hostnames = true # DNS 호스트 이름 활성화
 
   tags = {
-    Name = "Guestbook-VPC"
+    Name = "guestbook-vpc"
   }
 }
 
@@ -17,7 +17,7 @@ resource "aws_subnet" "nat_public_a" {
   map_public_ip_on_launch = true # 퍼블릭 서브넷에 인스턴스 생성 시 자동으로 퍼블릭 IP 할당
 
   tags = {
-    Name = "Guestbook-NAT-Subnet-AZ-a"
+    Name = "guestbook-nat-subnet-az-a"
   }
 }
 
@@ -29,7 +29,7 @@ resource "aws_subnet" "nat_public_c" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "Guestbook-NAT-Subnet-AZ-c"
+    Name = "guestbook-nat-subnet-az-c"
   }
 }
 
@@ -39,7 +39,7 @@ resource "aws_subnet" "was_private_a" {
   cidr_block        = "10.0.11.0/24"
 
   tags = {
-    Name = "Guestbook-WAS-Subnet-AZ-a"
+    Name = "guestbook-was-subnet-az-a"
   }
 }
 
@@ -49,7 +49,7 @@ resource "aws_subnet" "was_private_c" {
   cidr_block        = "10.0.12.0/24"
 
   tags = {
-    Name = "Guestbook-WAS-Subnet-AZ-c"
+    Name = "guestbook-was-subnet-az-c"
   }
 }
 
@@ -59,7 +59,7 @@ resource "aws_subnet" "rds_private_a" {
   cidr_block        = "10.0.21.0/24"
 
   tags = {
-    Name = "Guestbook-RDS-Subnet-AZ-a"
+    Name = "guestbook-rds-subnet-az-a"
   }
 }
 
@@ -69,7 +69,7 @@ resource "aws_subnet" "rds_private_c" {
   cidr_block        = "10.0.22.0/24"
 
   tags = {
-    Name = "Guestbook-RDS-Subnet-AZ-c"
+    Name = "guestbook-rds-subnet-az-c"
   }
 }
 
@@ -77,7 +77,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "Guestbook-IGW"
+    Name = "guestbook-igw"
   }
 }
 
@@ -90,7 +90,7 @@ resource "aws_route_table" "public_rt" {
   }
 
   tags = {
-    Name = "Guestbook-Public-RT"
+    Name = "guestbook-public-rt"
   }
 }
 
@@ -108,7 +108,7 @@ resource "aws_route_table" "private_a_rt" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "Guestbook-WAS-Private-RT-AZ-a"
+    Name = "guestbook-was-private-rt-az-a"
   }
 }
 
@@ -120,7 +120,7 @@ resource "aws_route_table_association" "private_rt_assoc1" {
 resource "aws_route_table" "private_c_rt" {
   vpc_id = aws_vpc.vpc.id
   tags = {
-    Name = "Guestbook-WAS-Private-RT-AZ-c"
+    Name = "guestbook-was-private-rt-az-c"
   }
 }
 
@@ -133,7 +133,7 @@ resource "aws_route_table" "private_rds_rt" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "Guestbook-RDS-Private-RT"
+    Name = "guestbook-rds-private-rt"
   }
 }
 
