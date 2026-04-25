@@ -1,6 +1,5 @@
 terraform {
-  # 필수 프로바이더 설정
-  required_providers {
+  required_providers { # 필수 프로바이더 설정
     aws = {
       source  = "hashicorp/aws" # AWS 프로바이더 소스
       version = "~> 6.41"       # AWS 프로바이더 버전 제한 6.41 이상

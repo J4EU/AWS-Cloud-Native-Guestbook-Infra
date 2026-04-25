@@ -9,7 +9,7 @@ variable "my_ip" {
 }
 
 variable "my_ami" {
-  description = "WAS golden imgae"
+  description = "WAS golden image"
   type        = string
 }
 

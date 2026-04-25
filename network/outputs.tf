@@ -1,47 +1,35 @@
-# VPC
-output "vpc_id" {
+output "vpc_id" { # VPC
   value = aws_vpc.vpc.id
 }
 
-# 퍼블릭 서브넷 AZ-a
-output "public_subnet1_a_id" {
-  value = aws_subnet.public_subnet1_a.id
+output "nat_subnet_a_id" { # 퍼블릭 서브넷 AZ-a (NAT)
+  value = aws_subnet.nat_public_a.id
 }
 
-# 퍼블릭 서브넷 AZ-c
-output "public_subnet1_c_id" {
-  value = aws_subnet.public_subnet1_c.id
+output "nat_subnet_c_id" { # 퍼블릭 서브넷 AZ-c (NAT)
+  value = aws_subnet.nat_public_c.id
 }
 
-# 프라이빗 서브넷 AZ-a (WAS)
-output "private_subnet1_a_id" {
-  value = aws_subnet.private_subnet1_a.id
+output "was_subnet_a_id" { # 프라이빗 서브넷 AZ-a (WAS)
+  value = aws_subnet.was_private_a.id
 }
 
-# 프라이빗 서브넷 AZ-c (WAS)
-output "private_subnet1_c_id" {
-  value = aws_subnet.private_subnet1_c.id
+output "was_subnet_c_id" { # 프라이빗 서브넷 AZ-c (WAS)
+  value = aws_subnet.was_private_c.id
 }
 
-# 프라이빗 서브넷 AZ-a (RDS)
-output "private_subnet2_a_id" {
-  value = aws_subnet.private_subnet2_a.id
+output "rds_subnet_a_id" { # 프라이빗 서브넷 AZ-a (RDS)
+  value = aws_subnet.rds_private_a.id
 }
 
-# 프라이빗 서브넷 AZ-c (RDS)
-output "private_subnet2_c_id" {
-  value = aws_subnet.private_subnet2_c.id
+output "rds_subnet_c_id" { # 프라이빗 서브넷 AZ-c (RDS)
+  value = aws_subnet.rds_private_c.id
 }
 
-# NAT 보안 그룹 (리팩토링(레이어 분리) 과정에서 주석 처리): NAT 관련 리소스 /app 폴더로 이동
-# output "nat_sg_id" {
-#   value = aws_security_group.nat_sg.id
-# }
-
-output "private_a_rt_id" {
+output "was_private_a_rt_id" { # 프라이빗 라우팅 테이블 AZ-a (WAS)
   value = aws_route_table.private_a_rt.id
 }
 
-output "private_c_rt_id" {
+output "was_private_c_rt_id" { # 프라이빗 라우팅 테이블 AZ-c (WAS)
   value = aws_route_table.private_c_rt.id
 }

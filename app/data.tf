@@ -1,5 +1,5 @@
 # L1 (Core Outputs 참조)
-data "terraform_remote_state" "network_link" {
+data "terraform_remote_state" "network" {
   backend = "local"
 
   config = {
@@ -8,7 +8,7 @@ data "terraform_remote_state" "network_link" {
 }
 
 # L2 (Database Outputs 참조)
-data "terraform_remote_state" "database_link" {
+data "terraform_remote_state" "database" {
   backend = "local"
 
   config = {

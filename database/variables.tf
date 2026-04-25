@@ -2,7 +2,6 @@
 variable "db_name" {
   description = "DB name"
   type        = string
-  default     = "my_db"
 }
 
 # RDS 사용자 이름
