@@ -1,7 +1,7 @@
 resource "aws_security_group" "rds" {
   name        = "guestbook-rds-sg"
   description = "Allow traffic from WAS SG"
-  vpc_id      = data.terraform_remote_state.network_state.outputs.vpc_id
+  vpc_id      = data.terraform_remote_state.network.outputs.vpc_id
 
   tags = {
     Name = "rds-sg"
@@ -22,8 +22,8 @@ resource "aws_db_subnet_group" "this" {
 
   # 프라이빗 서브넷 (RDS) 2개 이상
   subnet_ids = [
-    data.terraform_remote_state.network_state.outputs.rds_subnet_a_id,
-    data.terraform_remote_state.network_state.outputs.rds_subnet_c_id
+    data.terraform_remote_state.network.outputs.rds_subnet_a_id,
+    data.terraform_remote_state.network.outputs.rds_subnet_c_id
   ]
 
   tags = {
